@@ -23,7 +23,7 @@ message Menu {
   string corner_info = 1;
   string day_info = 2;
   repeated string menu_items = 3;
-  string image = 4;
+  bytes image = 4;
 }
 
 message ParseMenuResponse {
