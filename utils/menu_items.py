@@ -1,6 +1,9 @@
+import base64
+import cv2
+
 from utils.words import collect_text_in_cell
 
-def build_menu_items(menu_headers, content_blocks):
+def build_menu_items(menu_headers, content_blocks, image):
     menu = []
     for side_header in menu_headers['side_headers']:
         empty_count = 0
@@ -12,10 +15,16 @@ def build_menu_items(menu_headers, content_blocks):
             if len(menu_items) == 0:
                 empty_count += 1
             
+            x1, x2 = int(header['x_start']), int(header['x_end'])
+            y1, y2 = int(side_header['y_start']), int(side_header['y_end'])
+            crop = image[y1:y2, x1:x2]
+            _, buf = cv2.imencode('.jpg', crop)
+            
             menu_item = {
                 'corner_info': side_header['text'],
                 'day_info': header['text'],
-                'menu_items': menu_items
+                'menu_items': menu_items,
+                'image': base64.b64encode(buf).decode('utf-8')
             }
             menu.append(menu_item)
         

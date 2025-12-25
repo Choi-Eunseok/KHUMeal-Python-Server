@@ -24,6 +24,7 @@ class MenuService(proto.menu_pb2_grpc.MenuServiceServicer):
             m.corner_info = menu.get('corner_info', '')
             m.day_info = menu.get('day_info', '')
             m.menu_items.extend(menu.get('menu_items', []))
+            m.image = menu.get('image', '')
         return response
 
 def serve():

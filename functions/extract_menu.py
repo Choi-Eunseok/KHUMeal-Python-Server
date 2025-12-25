@@ -42,7 +42,7 @@ def parse_menu_to_structured_data(image_url = None):
     content_blocks = detect_content_blocks(all_blocks, not_valid_horizontal_lines)
     
     menu_headers = build_menu_headers(final_horizontal_lines, final_vertical_lines, header_y2, content_blocks)
-    menu = to_py_type(build_menu_items(menu_headers, content_blocks))
+    menu = to_py_type(build_menu_items(menu_headers, content_blocks, image))
 
     if IS_DEV_MODE:
         output_file_name="final"
