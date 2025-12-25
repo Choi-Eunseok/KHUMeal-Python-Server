@@ -17,6 +17,8 @@ RUN apt-get update && \
 
 COPY . .
 
+RUN sh build_proto.sh
+
 EXPOSE 50051
 
 CMD ["python", "grpc_server.py"]
