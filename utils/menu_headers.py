@@ -15,15 +15,18 @@ def build_side_headers(vxs, item_horizontal_lines, content_blocks, current_left,
         x_end   = next_left
 
         texts = collect_text_in_cell(content_blocks, x_start, x_end, y_start, y_end)
-        texts = [keyword for text in texts for keyword in CORNER_KEYWORDS if keyword in text]
+        if texts:
+            text = texts[0]
+            keyword = next((k for k in CORNER_KEYWORDS if k in text), '')
+        else:
+            keyword = ''
         
-
         item = {
             'x_start': int(x_start),
             'x_end': int(x_end),
             'y_start': int(y_start),
             'y_end': int(y_end),
-            'text': ' '.join(texts),
+            'text': keyword,
         }
 
         if 'children' not in parent:
