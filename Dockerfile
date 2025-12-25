@@ -3,6 +3,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 COPY requirements.txt ./
+COPY build_proto.sh ./build_proto.sh
+COPY proto/ ./proto/
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -13,11 +15,8 @@ RUN apt-get update && \
         libxrender-dev \
         gcc \
         && rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir -r requirements.txt
-
-COPY build_proto.sh ./
-COPY proto/ ./proto/
-RUN chmod +x build_proto.sh && ./build_proto.sh
+    pip install --no-cache-dir -r requirements.txt && \
+    chmod +x build_proto.sh && ./build_proto.sh
 
 COPY . .
 
