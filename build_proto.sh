@@ -8,7 +8,7 @@ python -m grpc_tools.protoc -I"$PROTO_DIR" --python_out="$PROTO_DIR" --grpc_pyth
 echo "[import 자동수정]"
 for f in "$PROTO_DIR"/*_pb2_grpc.py; do
   if grep -q '^import menu_pb2 as menu__pb2' "$f"; then
-    if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [ "$(uname)" = "Darwin" ]; then
       sed -i '' 's/^import menu_pb2 as menu__pb2/from . import menu_pb2 as menu__pb2/' "$f"
     else
       sed -i 's/^import menu_pb2 as menu__pb2/from . import menu_pb2 as menu__pb2/' "$f"
