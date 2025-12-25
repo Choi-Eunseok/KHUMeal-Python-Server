@@ -15,9 +15,11 @@ RUN apt-get update && \
         && rm -rf /var/lib/apt/lists/* && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY build_proto.sh ./
+COPY proto/ ./proto/
+RUN chmod +x build_proto.sh && ./build_proto.sh
 
-RUN sh build_proto.sh
+COPY . .
 
 EXPOSE 50051
 
