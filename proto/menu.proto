@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package menu;
+
+message FindRecentMenuRequest {
+  string base_url = 1;
+  string board_id = 2;
+  string keyword = 3;
+}
+
+message FindRecentMenuResponse {
+  string board_id = 1;
+  string base_date = 2;
+  string image_url = 3;
+  string prev_board_id = 4;
+}
+
+message ParseMenuRequest {
+  string image_url = 1;
+}
+
+message Menu {
+  string corner_info = 1;
+  string day_info = 2;
+  repeated string menu_items = 3;
+}
+
+message ParseMenuResponse {
+  repeated Menu menu = 1;
+}
+
+service MenuService {
+  rpc FindRecentMenu(FindRecentMenuRequest) returns (FindRecentMenuResponse);
+  rpc ParseMenu(ParseMenuRequest) returns (ParseMenuResponse);
+}

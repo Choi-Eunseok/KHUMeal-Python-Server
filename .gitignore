@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.Python
+env/
+venv/
+.env
+.venv
+
+# gRPC Python generated files
+proto/*_pb2.py
+proto/*_pb2_grpc.py
+
+# Jupyter/IPython
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test/coverage
+.pytest_cache/
+htmlcov/
+coverage.xml
+.coverage
+*.cover
+*.py,cover
+nosetests.xml
+test-results/
+/.mypy_cache/
+/.tox/
+/.hypothesis/
+/.cache/
