@@ -44,8 +44,10 @@ def parse_date_range_flexible(text):
     if not match:
         return None, None
 
-    left_str = re.sub(r'\D', '', match.group(1))
-    right_str = re.sub(r'\D', '', match.group(2))
+    left_str_raw = match.group(1)
+    right_str_raw = match.group(2)
+    left_str = re.sub(r'\D', '', left_str_raw)
+    right_str = re.sub(r'\D', '', right_str_raw)
 
     current_year = datetime.date.today().year
     start_date, end_date = None, None
@@ -53,9 +55,17 @@ def parse_date_range_flexible(text):
     if len(left_str) == 6:
         y, m, d = int(left_str[:2]), int(left_str[2:4]), int(left_str[4:])
         start_date = datetime.date(2000 + y, m, d)
-    elif len(left_str) == 4:
+    elif len(left_str) == 4 and len(left_str_raw) <= 5:
         m, d = int(left_str[:2]), int(left_str[2:])
         start_date = datetime.date(current_year, m, d)
+    else:
+        parts = left_str_raw.split('.')
+        if len(parts) == 3:
+            y, m, d = int(parts[0]), int(parts[1]), int(parts[2])
+            try:
+                start_date = datetime.date(2000 + y, m, d)
+            except Exception:
+                start_date = None
     
     if not start_date:
         return None, None
@@ -63,7 +73,7 @@ def parse_date_range_flexible(text):
     if len(right_str) == 6:
         y, m, d = int(right_str[:2]), int(right_str[2:4]), int(right_str[4:])
         end_date = datetime.date(2000 + y, m, d)
-    elif len(right_str) == 4:
+    elif len(right_str) == 4 and len(right_str_raw) <= 5:
         m, d = int(right_str[:2]), int(right_str[2:])
         end_year = start_date.year
         if m < start_date.month:
@@ -73,5 +83,14 @@ def parse_date_range_flexible(text):
         m = int(left_str[2:4]) if len(left_str) == 6 else int(left_str[:2])
         d = int(right_str)
         end_date = datetime.date(start_date.year, m, d)
+    else:
+        print("right_str_raw:", right_str_raw)
+        parts = right_str_raw.split('.')
+        if len(parts) == 3:
+            y, m, d = int(parts[0]), int(parts[1]), int(parts[2])
+            try:
+                end_date = datetime.date(2000 + y, m, d)
+            except Exception:
+                end_date = None
         
     return start_date, end_date
