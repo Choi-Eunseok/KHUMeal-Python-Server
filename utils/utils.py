@@ -17,7 +17,9 @@ def to_py_type(x):
     return x
 
 def parse_korean_date(text: str):
-    current_year = datetime.date.today().year
+    today = datetime.date.today()
+    current_year = today.year
+    current_month = today.month
 
     text = re.sub(r'[ \(\)\[\]{}월화수목금토일]', '', text)
 
@@ -33,8 +35,11 @@ def parse_korean_date(text: str):
         if m:
             month = int(m.group('month'))
             day = int(m.group('day'))
+            year = current_year
+            if month < current_month:
+                year += 1
             try:
-                return datetime.date(current_year, month, day)
+                return datetime.date(year, month, day)
             except ValueError:
                 return None
     return None
