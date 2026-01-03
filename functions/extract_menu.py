@@ -10,7 +10,7 @@ from utils.clova import extract_text_with_clova_ocr
 from utils.lines import correct_horizontal_lines, detect_header_area_and_valid_vertical_lines, detect_horizontal_lines, detect_valid_horizontal_lines, detect_vertical_lines
 from utils.words import detect_content_blocks, group_words_into_blocks, sort_words_in_reading_order
 from utils.menu_headers import build_menu_headers
-from utils.menu_items import build_menu_items
+from utils.menu_items import build_menu_items, merge_blank_corner_after
 
 load_dotenv()
 
@@ -43,6 +43,7 @@ def parse_menu_to_structured_data(image_url = None):
     
     menu_headers = build_menu_headers(final_horizontal_lines, final_vertical_lines, header_y2, content_blocks)
     menu = to_py_type(build_menu_items(menu_headers, content_blocks, image))
+    menu = merge_blank_corner_after(menu)
 
     if IS_DEV_MODE:
         output_file_name="final"
